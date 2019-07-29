@@ -22,4 +22,9 @@ const DOM = {
     error: form.querySelector("#error")
 }
 
-console.log(DOM)
+//for test: console.log(DOM)
+
+
+DOM.userName.addEventListener("input", function () {
+    console.log("input ....")
+})
