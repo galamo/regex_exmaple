@@ -19,12 +19,28 @@ const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+")
 const form = document.getElementById("formValidation");
 const DOM = {
     userName: form["userName"],
-    error: form.querySelector("#error")
+    error: form.querySelector("#error"),
+    success: form.querySelector("#success")
 }
 
-//for test: console.log(DOM)
+console.log(DOM)
 
 
-DOM.userName.addEventListener("input", function () {
-    console.log("input ....")
+DOM.userName.addEventListener("input", function (event) {
+    const { error, success } = DOM;
+    error.innerHTML = "";
+    success.innerHTML = "";
+    const { value } = event.currentTarget
+    if (!value) return raiseMessage(DOM.error, "Input Is Required")
+    const emailValidationResult = validateEmail(value)
+    if (!emailValidationResult) return raiseMessage(DOM.error, "Its not an email")
+    return raiseMessage(DOM.success, "You are ok!")
 })
+
+function validateEmail(input) {
+    return emailRegex.test(input.toLowerCase())
+}
+
+function raiseMessage(element, message) {
+    element.innerHTML = message
+}
